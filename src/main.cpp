@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "FluidPump.h"
 #include "Controller.h"
+#include "Dispenser.h"
+#include "Water.h"
 
 HardwareSerial SerialPort(1);
 
