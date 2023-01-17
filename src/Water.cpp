@@ -2,10 +2,10 @@
 #include "Water.h"
 #include <Adafruit_PWMServoDriver.h>
 
-Water::Water(int pin_servo, int pin_magnet, long unit_size, int servo_position_open, int servo_position_close ) {
+Water::Water(int pin_servo, int pin_magnet, long waiting_period, int servo_position_open, int servo_position_close ) {
     this->pin_servo = pin_servo;
     this->pin_magnet = pin_magnet;    
-    this->unit_size = unit_size;
+    this->waiting_period = waiting_period;
     this->servo_position_open = servo_position_open;
     this->servo_position_close = servo_position_close;
 
@@ -34,11 +34,11 @@ Water::Water(int pin_servo, int pin_magnet, long unit_size, int servo_position_o
 //     pwm_servo.setPWM(n, 0, pulse);
 // }
 
-void Water::dispense(int amount) {
-    end_timestamp = millis() + amount * unit_size;
+void Water::dispense() {
+    end_timestamp = millis() + waiting_period;
 }
 
-void Water::loop() {
+void Water::loop(int amount) {
     if(millis() < end_timestamp) {
         digitalWrite(pin_magnet, HIGH);
         servo->writeMicroseconds(pin_servo, servo_position_open);
@@ -46,5 +46,6 @@ void Water::loop() {
         digitalWrite(pin_magnet, LOW);
         servo->writeMicroseconds(pin_servo, servo_position_close);
     }
+}    
 
-}
+

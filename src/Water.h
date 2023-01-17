@@ -11,14 +11,15 @@ class Water {
         int pin_servo;
         int pin_magnet;
         
-        long unit_size;
+        
+        long waiting_period;
         long end_timestamp;
         int servo_position_open;
         int servo_position_close;
         bool signal_magnetic_valve;
     public:
-        Water(int pin_servo, int pin_magnet, long unit_size, int servo_position_open, int servo_position_close );
-        void dispense(int amount);
-        void loop();
+        Water(int pin_servo, int pin_magnet, long waiting_period, int servo_position_open, int servo_position_close );
+        void dispense();
+        void loop(int amount);
 };
 #endif
