@@ -3,8 +3,12 @@
 
 #include <Arduino.h>
 
-#define CONTROLLER_DELIMITER ' '
-#define CONTROLLER_ENDOFCMD '$'
+#define PACKET_ACK 0x00
+#define PACKET_NACK 0x01
+#define PACKET_OK 0x10
+#define PACKET_NOK 0x11
+#define PACKET_CMD 0x20
+#define PACKET_DATA 0x21
 
 class Controller {
     private:
