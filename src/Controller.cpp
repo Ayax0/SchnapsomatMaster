@@ -2,9 +2,12 @@
 #include "Controller.h"
 #include "Packet.h"
 
-Controller::Controller(int rx, int tx) {
+Controller::Controller() {
     SerialPort = new HardwareSerial(1);
-    SerialPort->begin(9600, SERIAL_8N1, rx, tx);
+}
+
+void Controller::begin(int rx, int tx) {
+    SerialPort->begin(115200, SERIAL_8N1, rx, tx);
 }
 
 void Controller::listen(void (*pipeline)(String *parameters, int parameter_amount)) {
@@ -22,8 +25,6 @@ void Controller::loop() {
 
                 Serial.print("Reveived Data: ");
                 Serial.println(packet["data"].as<String>());
-                
-                Packet(PACKET_OK).exec(SerialPort);
             }
         } else {
             Serial.print("SerializationError: ");
@@ -32,12 +33,6 @@ void Controller::loop() {
             while(SerialPort->available() > 0) SerialPort->read();
         }
 
-        // if(cmd.length() > 0) {
-        //     int parameter_amount = getParameterAmount(cmd, CONTROLLER_DELIMITER);
-        //     String parameters[parameter_amount];
-        //     proccessCommand(cmd, CONTROLLER_DELIMITER, parameters);
-
-        //     if(pipeline != NULL) pipeline(parameters, parameter_amount);
-        // }
+        Packet(PACKET_OK).exec(SerialPort);
     }
 }

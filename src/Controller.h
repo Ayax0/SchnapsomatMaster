@@ -17,7 +17,8 @@ class Controller {
         int getParameterAmount(String src, char delimiter = ' ');
         void proccessCommand(String src, char delimiter, String *parameters);
     public:
-        Controller(int rx, int tx);
+        Controller();
+        void begin(int rx, int tx);
         void listen(void (*pipeline)(String *parameters, int parameter_amount));
         void loop();
 };

@@ -1,15 +1,15 @@
 #include <Arduino.h>
 #include "WaterPump.h"
 
-WaterPump :: WaterPump ( int pin ) {
-    this -> pin = pin;
+WaterPump::WaterPump (int pin) {
+    this->pin = pin;
 
     pinMode(pin, OUTPUT);
     digitalWrite(pin,LOW);
 }
 
 void WaterPump::dispense(bool state) {
-    this -> state = state;
+    this->state = state;
 }
 
 void WaterPump::loop() {
