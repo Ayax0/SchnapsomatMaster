@@ -13,6 +13,7 @@
 class Controller {
     private:
         HardwareSerial* SerialPort;
+        bool ready = false;
         void (*pipeline)(String *parameters, int parameter_amount);
         int getParameterAmount(String src, char delimiter = ' ');
         void proccessCommand(String src, char delimiter, String *parameters);

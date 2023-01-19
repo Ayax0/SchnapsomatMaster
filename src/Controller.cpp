@@ -5,6 +5,7 @@
 Controller::Controller(int rx, int tx) {
     SerialPort = new HardwareSerial(1);
     SerialPort->begin(115200, SERIAL_8N1, rx, tx);
+    ready = true;
 }
 
 void Controller::listen(void (*pipeline)(String *parameters, int parameter_amount)) {
@@ -22,8 +23,10 @@ void Controller::loop() {
 
                 Serial.print("Reveived Data: ");
                 Serial.println(packet["data"].as<String>());
-                
-                Packet(PACKET_OK).exec(SerialPort);
+                // TODO: Packet Processor
+
+                if(ready) Packet(PACKET_OK).exec(SerialPort);
+                else Packet(PACKET_NOK).exec(SerialPort);
             }
         } else {
             Serial.print("SerializationError: ");
@@ -31,13 +34,5 @@ void Controller::loop() {
 
             while(SerialPort->available() > 0) SerialPort->read();
         }
-
-        // if(cmd.length() > 0) {
-        //     int parameter_amount = getParameterAmount(cmd, CONTROLLER_DELIMITER);
-        //     String parameters[parameter_amount];
-        //     proccessCommand(cmd, CONTROLLER_DELIMITER, parameters);
-
-        //     if(pipeline != NULL) pipeline(parameters, parameter_amount);
-        // }
     }
 }
