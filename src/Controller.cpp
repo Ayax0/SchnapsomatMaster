@@ -4,7 +4,7 @@
 
 Controller::Controller(int rx, int tx) {
     SerialPort = new HardwareSerial(1);
-    SerialPort->begin(9600, SERIAL_8N1, rx, tx);
+    SerialPort->begin(115200, SERIAL_8N1, rx, tx);
 }
 
 void Controller::listen(void (*pipeline)(String *parameters, int parameter_amount)) {
