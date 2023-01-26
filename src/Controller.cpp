@@ -4,11 +4,12 @@
 
 Controller::Controller(int rx, int tx) {
     SerialPort = new HardwareSerial(1);
-    SerialPort->begin(115200, SERIAL_8N1, rx, tx);
+    SerialPort->begin(9600, SERIAL_8N1, rx, tx);
     ready = true;
+    pipeline = NULL;
 }
 
-void Controller::listen(void (*pipeline)(String *parameters, int parameter_amount)) {
+void Controller::listen(void (*pipeline)(StaticJsonDocument<300> packet)) {
     this->pipeline = pipeline;
 }
 
@@ -23,7 +24,7 @@ void Controller::loop() {
 
                 Serial.print("Reveived Data: ");
                 Serial.println(packet["data"].as<String>());
-                // TODO: Packet Processor
+                if(pipeline != NULL) this->pipeline(packet);
 
                 if(ready) Packet(PACKET_OK).exec(SerialPort);
                 else Packet(PACKET_NOK).exec(SerialPort);
@@ -32,7 +33,20 @@ void Controller::loop() {
             Serial.print("SerializationError: ");
             Serial.println(error.c_str());
 
-            while(SerialPort->available() > 0) SerialPort->read();
+            digitalWrite(10, HIGH);
+            delay(100);
+            digitalWrite(10, LOW);
+            delay(100);
+            digitalWrite(10, HIGH);
+            delay(100);
+            digitalWrite(10, LOW);
+            delay(100);
+            digitalWrite(10, HIGH);
+            delay(100);
+            digitalWrite(10, LOW);
+            delay(100);
+
+            Packet(PACKET_NACK).exec(SerialPort);
         }
     }
 }

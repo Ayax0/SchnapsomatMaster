@@ -2,6 +2,7 @@
 #define Controller_h
 
 #include <Arduino.h>
+#include <ArduinoJson.h>
 
 #define PACKET_ACK 0x00
 #define PACKET_NACK 0x01
@@ -14,12 +15,12 @@ class Controller {
     private:
         HardwareSerial* SerialPort;
         bool ready = false;
-        void (*pipeline)(String *parameters, int parameter_amount);
+        void (*pipeline)(StaticJsonDocument<300> packet);
         int getParameterAmount(String src, char delimiter = ' ');
         void proccessCommand(String src, char delimiter, String *parameters);
     public:
         Controller(int rx, int tx);
-        void listen(void (*pipeline)(String *parameters, int parameter_amount));
+        void listen(void (*pipeline)(StaticJsonDocument<300> packet));
         void loop();
 };
 
