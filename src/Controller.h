@@ -2,26 +2,40 @@
 #define Controller_h
 
 #include <Arduino.h>
-#include <ArduinoJson.h>
+#include "util/crc16.h"
+#include "util/Buffer.h"
+#include "peripherie/Dispenser.h"
 
-#define PACKET_ACK 0x00
-#define PACKET_NACK 0x01
-#define PACKET_OK 0x10
-#define PACKET_NOK 0x11
-#define PACKET_CMD 0x20
-#define PACKET_DATA 0x21
+#define MAX_DISPENSER_AMOUNT 32
+
+#define MAX_HDLC_FRAME_LENGTH 32
+#define FRAME_BOUNDARY_OCTET 0x7E
+#define CONTROL_ESCAPE_OCTET 0x7D
+#define INVERT_OCTET 0x20
+#define CRC16_CCITT_INIT_VAL 0xFFFF
+
+#define low(x)    ((x) & 0xFF)
+#define high(x)   (((x)>>8) & 0xFF)
 
 class Controller {
     private:
         HardwareSerial* SerialPort;
-        bool ready = false;
-        void (*pipeline)(StaticJsonDocument<300> packet);
-        int getParameterAmount(String src, char delimiter = ' ');
-        void proccessCommand(String src, char delimiter, String *parameters);
+        Dispenser* dispenser_registry[MAX_DISPENSER_AMOUNT];
+
+        void receiveBuffer(Buffer buffer);
+        void sendBuffer(Buffer buffer);
+        void charReceiver(uint8_t data);
+        void charSender(uint8_t data);
+        bool escape_character;
+        uint8_t* receive_frame_buffer;
+        uint8_t frame_position;
+        uint16_t frame_checksum;
+        uint16_t max_frame_length;
     public:
         Controller(int rx, int tx);
-        void listen(void (*pipeline)(StaticJsonDocument<300> packet));
         void loop();
+
+        void registerDispenser(uint8_t index, Dispenser *dispenser);
 };
 
 #endif

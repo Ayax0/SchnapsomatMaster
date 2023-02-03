@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "FluidPump.h"
+#include "GenericDispenser.h"
 
-FluidPump::FluidPump(int pin, long unit_size) {
+GenericDispenser::GenericDispenser(int pin, long unit_size) {
     this->pin = pin;
     this->unit_size = unit_size;
 
@@ -9,11 +9,11 @@ FluidPump::FluidPump(int pin, long unit_size) {
     digitalWrite(pin, LOW);
 }
 
-void FluidPump::dispense(int amount) {
+void GenericDispenser::dispense(int amount) {
     end_timestamp = millis() + amount * unit_size;
 }
 
-void FluidPump::loop() {
+void GenericDispenser::loop() {
     if(millis() < end_timestamp) {
         digitalWrite(pin, HIGH);
     } else {

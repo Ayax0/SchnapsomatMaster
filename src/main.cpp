@@ -1,52 +1,39 @@
 #include <Arduino.h>
-#include "FluidPump.h"
 #include "Controller.h"
-#include "Dispenser.h"
-#include "WaterDispenser.h"
+#include "peripherie/GenericDispenser.h"
+#include "peripherie/WaterDispenser.h"
 
 HardwareSerial SerialPort(1);
 
-Controller controller(GPIO_NUM_41, GPIO_NUM_42);
+Controller Schnapsomat_Ctrl(GPIO_NUM_41, GPIO_NUM_42);
 
-FluidPump fluidPump1(1, 500);
-FluidPump fluidPump2(2, 500);
-FluidPump fluidPump3(3, 500);
+GenericDispenser FluidPump1(1, 500);
+GenericDispenser FluidPump2(2, 500);
+GenericDispenser FluidPump3(3, 500);
 
-WaterDispenser water(GPIO_NUM_4, GPIO_NUM_5);
+GenericDispenser Powder1(6, 500);
+GenericDispenser Powder2(7, 500);
 
-long last_cmd = 0;
-
-void commandHandler(StaticJsonDocument<300> packet) {
-  digitalWrite(10, HIGH);
-  last_cmd = millis();
-
-  JsonObject data = packet["data"].as<JsonObject>();
-  if(data["action"] == "DISP") {
-    String ingredience = data["ingredience"];
-    int amount = data["amount"].as<int>();
-    if(ingredience == "vodka") fluidPump1.dispense(amount);
-    if(ingredience == "zwaetschgen") fluidPump2.dispense(amount);
-    if(ingredience == "traesch") fluidPump3.dispense(amount);
-  }
-}
+WaterDispenser Water(GPIO_NUM_4, GPIO_NUM_5);
 
 void setup() {
   Serial.begin(115200);
-  controller.listen(commandHandler);
+  Wire.begin(8, 9);
+  Water.begin();
 
   pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  digitalWrite(10, LOW);
+  digitalWrite(11, LOW);
 
-  delay(2000);
-  water.dispense(1);
+  Schnapsomat_Ctrl.registerDispenser(0, &Water);
+  Schnapsomat_Ctrl.registerDispenser(1, &FluidPump1);
+  Schnapsomat_Ctrl.registerDispenser(2, &FluidPump2);
+  Schnapsomat_Ctrl.registerDispenser(3, &FluidPump3);
+  Schnapsomat_Ctrl.registerDispenser(4, &Powder1);
+  Schnapsomat_Ctrl.registerDispenser(5, &Powder2);
 }
 
 void loop() {
-  controller.loop();
-  fluidPump1.loop();
-  fluidPump2.loop();
-  fluidPump3.loop();
-
-  if(millis() > (last_cmd + 500)) {
-    digitalWrite(10, LOW);
-  }
+  Schnapsomat_Ctrl.loop();
 }
