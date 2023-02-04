@@ -7,8 +7,8 @@ class TeaDispenser: public Dispenser {
     private:
         int pinOut;
         int pinIn;
-        int count; 
-        int amount;     
+        int amount; 
+        int last_state;     
     public:
         TeaDispenser(int pinOut, int pinIn);
         virtual void dispense(int amount);
