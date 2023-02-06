@@ -8,15 +8,15 @@ HardwareSerial SerialPort(1);
 
 Controller Schnapsomat_Ctrl(GPIO_NUM_41, GPIO_NUM_42);
 
-GenericDispenser FluidPump1(1, 4500);
-GenericDispenser FluidPump2(2, 4500);
-GenericDispenser FluidPump3(3, 3000);
+GenericDispenser FluidPump1(1, 1500); //1cl Vodka
+GenericDispenser FluidPump2(2, 1500); //1cl Zwätsche
+GenericDispenser FluidPump3(3, 1500); //1cl Träsch
 
-GenericDispenser Powder1(6, 500);
-GenericDispenser Powder2(7, 500);
+GenericDispenser Powder1(6, 500); //Zucker
+GenericDispenser Powder2(7, 500); //Kaffee
 
-TeaDispenser Balls1(10, 19);
-TeaDispenser Balls2(11, 20);
+TeaDispenser Balls1(10, 19); //Hagenbutte
+TeaDispenser Balls2(11, 20); //Pfefferminze
 
 
 WaterDispenser Water(GPIO_NUM_4, GPIO_NUM_5);
