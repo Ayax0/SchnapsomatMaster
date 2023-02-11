@@ -5,8 +5,8 @@
 #include <Adafruit_PWMServoDriver.h>
 #include "Dispenser.h"
 
-#define SERVO_CLOSE 600
-#define SERVO_OPEN 150
+#define SERVO_CLOSE 470
+#define SERVO_OPEN 305
 
 class WaterDispenser: public Dispenser {
     private:

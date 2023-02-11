@@ -33,12 +33,12 @@ void WaterDispenser::loop() {
         }
         if(dispense_position == 1 && millis() > sleep) {
             dispense_position = 2;
-            sleep = millis() + 500;
+            sleep = millis() + 1000;
             digitalWrite(pin_vent, HIGH);
         }
         if(dispense_position == 2 && millis() > sleep) {
             dispense_position = 3;
-            sleep = millis() + 5000;
+            sleep = millis() + 2000;
             closeServo();
             digitalWrite(pin_vent, LOW);
         }
