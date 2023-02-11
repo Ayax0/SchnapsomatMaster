@@ -4,6 +4,7 @@
 #include "peripherie/TeaDispenser.h"
 #include "peripherie/WaterDispenser.h"
 
+HardwareSerial SerialPort(1);
 Controller Schnapsomat_Ctrl(GPIO_NUM_41, GPIO_NUM_42);
 
 GenericDispenser FluidPump1(1, 1500); //1cl Vodka
@@ -32,7 +33,6 @@ void setup() {
   Schnapsomat_Ctrl.registerDispenser(5, &Powder2);
   Schnapsomat_Ctrl.registerDispenser(6, &Balls1);
   Schnapsomat_Ctrl.registerDispenser(7, &Balls2);
-
 }
 
 void loop() {
