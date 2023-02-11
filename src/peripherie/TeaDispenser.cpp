@@ -4,7 +4,8 @@
 TeaDispenser::TeaDispenser(int pinOut, int pinIn) {
     this->pinOut = pinOut;
     this->pinIn = pinIn;
-    this->last_state = 0;
+    this->last_state = LOW;
+    this->current_state = LOW;
 
     pinMode(pinOut, OUTPUT);
     pinMode(pinIn, INPUT_PULLDOWN);
@@ -17,14 +18,17 @@ void TeaDispenser::dispense(int amount) {
 
 void TeaDispenser::loop() {
     int sensor_state = digitalRead(pinIn);
-    if(sensor_state == HIGH && last_state == LOW) {
-        amount--;
+    if(sensor_state != last_state && sensor_state == LOW) {
         last_state = sensor_state;
+        amount--;
     }
 
-    if(amount > 0) {
+    if(amount > 0 && current_state == LOW) {
+        current_state = HIGH;
         digitalWrite(pinOut, HIGH);
-    } else {
+    }
+    if(amount <= 0 && current_state == HIGH) {
+        current_state = LOW;
         digitalWrite(pinOut, LOW);
     }    
 }

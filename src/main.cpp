@@ -4,8 +4,6 @@
 #include "peripherie/TeaDispenser.h"
 #include "peripherie/WaterDispenser.h"
 
-HardwareSerial SerialPort(1);
-
 Controller Schnapsomat_Ctrl(GPIO_NUM_41, GPIO_NUM_42);
 
 GenericDispenser FluidPump1(1, 1500); //1cl Vodka
@@ -25,13 +23,6 @@ void setup() {
   Serial.begin(115200);
   Wire.begin(8, 9);
   Water.begin();
-
-
-  // Muss dies hier noch Entfernt werden?
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  digitalWrite(10, LOW);
-  digitalWrite(11, LOW);
 
   Schnapsomat_Ctrl.registerDispenser(0, &Water);
   Schnapsomat_Ctrl.registerDispenser(1, &FluidPump1);
