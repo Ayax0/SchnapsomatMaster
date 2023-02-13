@@ -55,13 +55,17 @@ void WaterDispenser::dispense(int amount) {
 }
 
 void WaterDispenser::openServo() {
+    pwm.wakeup();
     if(servo_status) return;
     for(uint16_t pulselen = SERVO_CLOSE; pulselen > SERVO_OPEN; pulselen--) pwm.setPWM(0, 0, pulselen);
     servo_status = true;
+    pwm.sleep();
 }
 
 void WaterDispenser::closeServo() {
+    pwm.wakeup();
     if(!servo_status) return;
     for(uint16_t pulselen = SERVO_OPEN; pulselen < SERVO_CLOSE; pulselen++) pwm.setPWM(0, 0, pulselen);
     servo_status = false;
+    pwm.sleep();
 }
