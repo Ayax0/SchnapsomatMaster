@@ -14,8 +14,8 @@ void WaterDispenser::begin() {
     pwm.setPWMFreq(50);
     delay(10);
 
-    // digitalWrite(pin_pump, HIGH);
-    // pump_status = true;
+    digitalWrite(pin_pump, HIGH);
+    pump_status = true;
 
     digitalWrite(pin_vent, LOW);
     vent_status = true;
