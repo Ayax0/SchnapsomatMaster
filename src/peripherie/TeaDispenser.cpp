@@ -18,7 +18,7 @@ void TeaDispenser::dispense(int amount) {
 
 void TeaDispenser::loop() {
     int sensor_state = digitalRead(pinIn);
-    if(sensor_state == LOW) {
+     if(sensor_state != last_state && sensor_state == HIGH) {
         last_state = sensor_state;
         amount--;
     }
@@ -32,3 +32,4 @@ void TeaDispenser::loop() {
         digitalWrite(pinOut, LOW);
     }    
 }
+
