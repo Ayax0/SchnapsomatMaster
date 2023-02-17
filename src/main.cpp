@@ -12,7 +12,7 @@ GenericDispenser FluidPump2(2, 3100); //1cl Zwätsche
 GenericDispenser FluidPump3(3, 3000); //1cl Träsch
 
 GenericDispenser Powder1(6, 1400); //Zucker
-GenericDispenser Powder2(7, 400); //Kaffee
+GenericDispenser Powder2(7, 200); //Kaffee
 
 TeaDispenser Balls1(10, 19); //Hagenbutte
 TeaDispenser Balls2(11, 20); //Pfefferminze
