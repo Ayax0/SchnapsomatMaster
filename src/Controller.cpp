@@ -1,14 +1,17 @@
 #include "Controller.h"
 
-Controller::Controller(int rx, int tx) {
-    SerialPort = new HardwareSerial(1);
-    SerialPort->begin(9600, SERIAL_8N1, rx, tx);
+Controller::Controller(HardwareSerial* serial) {
+    this->SerialPort = serial;
 
     this->frame_position = 0;
 	this->max_frame_length = max_frame_length;
 	this->receive_frame_buffer = (uint8_t *)malloc(max_frame_length+1);
     this->frame_checksum = CRC16_CCITT_INIT_VAL;
     this->escape_character = false;
+}
+
+void Controller::begin() {
+    SerialPort->begin(9600, SERIAL_8N1);
 }
 
 void Controller::loop() {
@@ -30,10 +33,16 @@ void Controller::registerDispenser(uint8_t index, Dispenser *dispenser) {
 void Controller::receiveBuffer(Buffer buffer) {
     // cmd packet
     if(buffer.readUInt8(0) == 0x01) {
+        Serial.println("CMD_PACK");
         // dispense packet
         if(buffer.readUInt8(1) == 0x00) {
             uint8_t index = buffer.readUInt8(2);
             uint8_t amount = buffer.readUInt8(3);
+
+            Serial.print("DISPENSE_PACK ");
+            Serial.print(index);
+            Serial.print(": ");
+            Serial.println(amount);
             
             if(dispenser_registry[index] != NULL) dispenser_registry[index]->dispense(amount);
         }

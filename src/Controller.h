@@ -32,7 +32,8 @@ class Controller {
         uint16_t frame_checksum;
         uint16_t max_frame_length;
     public:
-        Controller(int rx, int tx);
+        Controller(HardwareSerial* serial);
+        void begin();
         void loop();
 
         void registerDispenser(uint8_t index, Dispenser *dispenser);
