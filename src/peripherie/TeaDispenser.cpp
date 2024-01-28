@@ -8,7 +8,7 @@ TeaDispenser::TeaDispenser(int pinOut, int pinIn) {
     this->current_state = LOW;
 
     pinMode(pinOut, OUTPUT);
-    pinMode(pinIn, INPUT_PULLDOWN);
+    pinMode(pinIn, INPUT);
     digitalWrite(pinOut, LOW);
 }
 
