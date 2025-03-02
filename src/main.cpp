@@ -6,12 +6,12 @@
 
 Controller Schnapsomat_Ctrl(&Serial3);
 
-GenericDispenser FluidPump1(28, 3000); //1cl Vodka
-GenericDispenser FluidPump2(36, 3100); //1cl Zwätsche
-GenericDispenser FluidPump3(44, 3000); //1cl Träsch
+GenericDispenser FluidPump1(28, 1200); //1cl Vodka
+GenericDispenser FluidPump2(36, 1000); //1cl Zwätsche
+GenericDispenser FluidPump3(44, 1000); //1cl Träsch
 
 GenericDispenser Powder1(45, 1400); //Zucker
-GenericDispenser Powder2(53, 200); //Kaffee
+GenericDispenser Powder2(53, 250); //Kaffee
 
 // TeaDispenser Balls1(10, 19); //Hagenbutte
 // TeaDispenser Balls2(11, 20); //Pfefferminze
