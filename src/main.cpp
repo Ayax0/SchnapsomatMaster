@@ -1,38 +1,39 @@
 #include <Arduino.h>
 #include "Controller.h"
 #include "peripherie/GenericDispenser.h"
-#include "peripherie/TeaDispenser.h"
-#include "peripherie/WaterDispenser.h"
+#include "peripherie/OutletDispenser.h"
 
 Controller Schnapsomat_Ctrl(&Serial3);
 
-GenericDispenser FluidPump1(28, 1200); //1cl Vodka
-GenericDispenser FluidPump2(36, 1000); //1cl Zwätsche
-GenericDispenser FluidPump3(44, 1000); //1cl Träsch
+GenericDispenser FluidPump1(53, 52, 1200); //1cl Vodka
+GenericDispenser FluidPump2(51, 50, 1000); //1cl Zwätsche
+GenericDispenser FluidPump3(49, 48, 1000); //1cl Träsch
 
-GenericDispenser Powder1(45, 1400); //Zucker
-GenericDispenser Powder2(53, 250); //Kaffee
+GenericDispenser FluidPump4(45, 44, 1400); //Zucker
+GenericDispenser FluidPump5(43, 42, 250); //Kaffee
 
-// TeaDispenser Balls1(10, 19); //Hagenbutte
-// TeaDispenser Balls2(11, 20); //Pfefferminze
+GenericDispenser FluidPump6(41, 40, 190); //Hagenbutte
+GenericDispenser FluidPump7(39, 38, 200); //Pfefferminze
 
 
-WaterDispenser Water(29, 37, &Serial2);
+GenericDispenser FluidPump8(47, 46, 370); //Wasser
+
+OutletDispenser FluidPump9(37, 36, 370); //Auslass
 
 void setup() {
   // Logging
   Serial.begin(115200);
 
-  Water.begin();
   Schnapsomat_Ctrl.begin();
-  Schnapsomat_Ctrl.registerDispenser(0, &Water);
-  Schnapsomat_Ctrl.registerDispenser(1, &FluidPump1);
-  Schnapsomat_Ctrl.registerDispenser(2, &FluidPump2);
-  Schnapsomat_Ctrl.registerDispenser(3, &FluidPump3);
-  Schnapsomat_Ctrl.registerDispenser(4, &Powder1);
-  Schnapsomat_Ctrl.registerDispenser(5, &Powder2);
-  // Schnapsomat_Ctrl.registerDispenser(6, &Balls1);
-  // Schnapsomat_Ctrl.registerDispenser(7, &Balls2);
+  Schnapsomat_Ctrl.registerDispenser(0, &FluidPump1);
+  Schnapsomat_Ctrl.registerDispenser(1, &FluidPump2);
+  Schnapsomat_Ctrl.registerDispenser(2, &FluidPump3);
+  Schnapsomat_Ctrl.registerDispenser(3, &FluidPump4);
+  Schnapsomat_Ctrl.registerDispenser(4, &FluidPump5);
+  Schnapsomat_Ctrl.registerDispenser(5, &FluidPump6);
+  Schnapsomat_Ctrl.registerDispenser(6, &FluidPump7);
+  Schnapsomat_Ctrl.registerDispenser(7, &FluidPump8);
+  Schnapsomat_Ctrl.registerDispenser(8, &FluidPump9);
 
   Serial.println("Status: OK");
 }

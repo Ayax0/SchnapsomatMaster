@@ -3,14 +3,16 @@
 
 #include "Dispenser.h"
 
-class GenericDispenser: public Dispenser {
+class GenericDispenser : public Dispenser {
     private:
-        int pin;
+        int pin1;
+        int pin2;
         long unit_size;
-        long end_timestamp;        
+        long end_timestamp;
+        
     public:
-        GenericDispenser(int pin, long unit_size);
+        GenericDispenser(int pin1, int pin2, long unit_size);
         virtual void dispense(int amount);
-        virtual void loop();            
+        virtual void loop();
 };
 #endif

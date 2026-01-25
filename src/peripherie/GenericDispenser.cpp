@@ -1,12 +1,15 @@
 #include <Arduino.h>
 #include "GenericDispenser.h"
 
-GenericDispenser::GenericDispenser(int pin, long unit_size) {
-    this->pin = pin;
+GenericDispenser::GenericDispenser(int pin1, int pin2, long unit_size) {
+    this->pin1 = pin1;
+    this->pin2 = pin2;
     this->unit_size = unit_size;
 
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
+    pinMode(pin1, OUTPUT);
+    pinMode(pin2, OUTPUT);
+    digitalWrite(pin1, LOW);
+    digitalWrite(pin2, LOW);
 }
 
 void GenericDispenser::dispense(int amount) {
@@ -14,9 +17,11 @@ void GenericDispenser::dispense(int amount) {
 }
 
 void GenericDispenser::loop() {
-    if(millis() < end_timestamp) {
-        digitalWrite(pin, HIGH);
+    if (millis() < end_timestamp) {
+        digitalWrite(pin1, HIGH);
+        digitalWrite(pin2, LOW);
     } else {
-        digitalWrite(pin, LOW);
+        digitalWrite(pin1, LOW);
+        digitalWrite(pin2, LOW);
     }
 }
