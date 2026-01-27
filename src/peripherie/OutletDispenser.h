@@ -8,10 +8,8 @@ class OutletDispenser: public Dispenser {
         int pin1;
         int pin2;
         long unit_size;
-        unsigned long start_delay_time;
-        long end_timestamp; 
-        bool isWaiting = false;
-        bool isRunning = false;       
+        long start_timestamp;
+        long end_timestamp;       
     public:
         OutletDispenser(int pin1, int pin2, long unit_size);
         virtual void dispense(int amount);

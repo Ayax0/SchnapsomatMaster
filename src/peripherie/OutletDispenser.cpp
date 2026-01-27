@@ -13,36 +13,17 @@ OutletDispenser::OutletDispenser(int pin1, int pin2, long unit_size) {
 }
 
 void OutletDispenser::dispense(int amount) {
-    start_delay_time = millis();
-    end_timestamp = start_delay_time + 5000 + amount * unit_size;
-
-    isWaiting = true;
-    isRunning = false;
-
+    start_timestamp = millis() + 1500;
+    end_timestamp = start_timestamp + amount * unit_size;
 }
 
 void OutletDispenser::loop() {
     unsigned long now = millis();
-
-    if (isWaiting && now - start_delay_time < 5000) {
-        digitalWrite(pin1, LOW);
-        digitalWrite(pin2, LOW);
-        return;
-    }
-
-    if (isWaiting && now - start_delay_time >= 5000) {
-        isWaiting = false;
-        isRunning = true;
-    }
-
-    if (isRunning && now < end_timestamp) {
+    if(now > start_timestamp && now < end_timestamp) {
         digitalWrite(pin1, HIGH);
         digitalWrite(pin2, LOW);
-    }
-    
-    else {
+    } else {
         digitalWrite(pin1, LOW);
         digitalWrite(pin2, LOW);
-        isRunning = false;
     }
 }
