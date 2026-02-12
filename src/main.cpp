@@ -5,9 +5,9 @@
 
 Controller Schnapsomat_Ctrl(&Serial3);
 
-GenericDispenser FluidPump1(53, 52, 340); //10ml Vodka
-GenericDispenser FluidPump2(51, 50, 340); //10ml Zwätsche
-GenericDispenser FluidPump3(49, 48, 340); //10ml Träsch
+GenericDispenser FluidPump1(53, 52, 300); //10ml Vodka
+GenericDispenser FluidPump2(51, 50, 300); //10ml Zwätsche
+GenericDispenser FluidPump3(49, 48, 300); //10ml Träsch
 
 GenericDispenser FluidPump4(45, 44, 170); //5ml Zucker
 GenericDispenser FluidPump5(43, 42, 340); //10ml Kaffee
@@ -18,7 +18,7 @@ GenericDispenser FluidPump7(39, 38, 340); //10ml Pfefferminze
 
 GenericDispenser FluidPump8(47, 46, 365); //10ml Wasser
 
-OutletDispenser FluidPump9(37, 36, 10600); //250ml Auslass
+OutletDispenser FluidPump9(37, 36, 11600); //250ml Auslass
 
 void setup() {
   // Logging
