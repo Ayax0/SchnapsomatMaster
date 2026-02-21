@@ -10,7 +10,7 @@ GenericDispenser FluidPump2(51, 50, 300); //10ml Zwätsche
 GenericDispenser FluidPump3(49, 48, 300); //10ml Träsch
 
 GenericDispenser FluidPump4(45, 44, 250); //5ml Zucker
-GenericDispenser FluidPump5(43, 42, 340); //10ml Kaffee
+GenericDispenser FluidPump5(43, 42, 410); //10ml Kaffee
 
 GenericDispenser FluidPump6(41, 40, 340); //10ml Hagenbutte
 GenericDispenser FluidPump7(39, 38, 340); //10ml Pfefferminze
